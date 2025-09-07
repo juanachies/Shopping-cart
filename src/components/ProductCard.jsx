@@ -1,10 +1,6 @@
 import {Badge, Card, Button} from 'react-bootstrap'
 
-const ProductCard = ({name, price, isAvailable, onSelect}) => {
-
-    const handleClick = () => {
-        onSelect(name)
-    }
+const ProductCard = ({code, name, price, isAvailable, onAddProd}) => {
 
     return (
         <Card>
@@ -18,7 +14,7 @@ const ProductCard = ({name, price, isAvailable, onSelect}) => {
                 </div>
                 <Card.Title>{name}</Card.Title>
                 <Card.Subtitle>${price}</Card.Subtitle>
-                <Button onClick={handleClick}>
+                <Button onClick={onAddProd}>
                     Agregar al carrito
                 </Button>
             </Card.Body>

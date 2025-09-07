@@ -6,8 +6,25 @@ const Products = ({productList}) => {
 
     const [cartList, setCartList] = useState([])
 
-    const handleSelect = (name) => { 
-        setCartList((prev) => [...prev, name])
+    const handleAddProd = (product) => { 
+        const exists = cartList.some((prod) => prod.code === product.code)
+
+        product.isAvailable ? 
+            !exists ? 
+                setCartList((prev) => [...prev, product]) 
+                : 
+                alert('Ya esta en el carrito')
+            :
+            alert('Producto no disponible');
+    }
+
+    const handleDeleteProd = (code) => {
+        setCartList(prev => prev.filter(prod => prod.code !== code))
+    }
+
+    const handleClear = () => {
+        setCartList([])
+        alert('Compra realizada')
     }
 
     return (
@@ -16,14 +33,15 @@ const Products = ({productList}) => {
             {productList.map(product =>
                 <ProductCard 
                     key={product.code}
+                    code={product.code}
                     name={product.name}
                     price={product.price}
                     isAvailable={product.isAvailable} 
-                    onSelect={handleSelect}                   
+                    onAddProd={() => handleAddProd(product)}                   
                     />
             )}
         </div>
-        <Cart cartList={cartList}/>
+        <Cart cartList={cartList} onDelete={handleDeleteProd} onClear={handleClear}/>
         </>
     )
 }
